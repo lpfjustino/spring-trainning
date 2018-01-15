@@ -2,6 +2,7 @@ package springtreinamento;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +12,7 @@ import springtreinamento.repository.PersonRepository;
 
 
 @SpringBootApplication
-public class Application{
+public class Application {
 
   private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -19,20 +20,32 @@ public class Application{
     SpringApplication.run(Application.class, args);
   }
 
-//  @Bean
-//  public CommandLineRunner demo(PersonRepository repository) {
-//    return (args) -> {
-//      // save a couple of customers
-//      repository.save(new Person(123l, "A", "Ta"));
-//      repository.save(new Person(123l, "Pode", "Pa"));
+//	public void run(String... args) throws Exception {
 //
-//      // fetch all customers
-//      log.info("Persons found with findAll():");
-//      log.info("-------------------------------");
-//      for (Person customer : repository.findAll()) {
-//        log.info(customer.toString());
-//      }
-//      log.info("");
-//    };
-//  }
+//		repository.deleteAll();
+//
+//		// save a couple of persons
+//		repository.save(new Person("Alice", "Smith"));
+//		repository.save(new Person("Bob", "Smith"));
+//
+//		// fetch all persons
+//		System.out.println("Persons found with findAll():");
+//		System.out.println("-------------------------------");
+//		for (Person person : repository.findAll()) {
+//			System.out.println(person);
+//		}
+//		System.out.println();
+//
+//		// fetch an individual person
+//		System.out.println("Person found with findByFirstName('Alice'):");
+//		System.out.println("--------------------------------");
+//		System.out.println(repository.findByName("Alice"));
+//
+//		System.out.println("Persons found with findByLastName('Smith'):");
+//		System.out.println("--------------------------------");
+//		for (Person person : repository.findByCountry("Smith")) {
+//			System.out.println(person);
+//		}
+//
+//	}
 }

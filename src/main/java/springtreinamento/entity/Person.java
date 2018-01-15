@@ -12,7 +12,7 @@ public class Person {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private String id;
 
   @NotBlank
   private String name;
@@ -22,21 +22,26 @@ public class Person {
 
   public Person(){}
 
-  public Person(Long id, String name, String country){
+  public Person(String id, String name, String country){
     this.setId(id);
     this.setName(name);
     this.setCountry(country);
   }
 
-  public Person(Long id){
+  public Person(String name, String country){
+    this.setName(name);
+    this.setCountry(country);
+  }
+
+  public Person(String id){
     this.setId(id);
   }
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
