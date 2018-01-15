@@ -19,20 +19,20 @@ public class Application{
     SpringApplication.run(Application.class, args);
   }
 
-  @Bean
-  public CommandLineRunner demo(PersonRepository repository) {
-    return (args) -> {
-      // save a couple of customers
-      repository.save(new Person(123l, "A", "Ta"));
-      repository.save(new Person(123l, "Pode", "Pa"));
-
-      // fetch all customers
-      log.info("Persons found with findAll():");
-      log.info("-------------------------------");
-      for (Person customer : repository.findAll()) {
-        log.info(customer.toString());
-      }
-      log.info("");
-    };
-  }
+//  @Bean
+//  public CommandLineRunner demo(PersonRepository repository) {
+//    return (args) -> {
+//      // save a couple of customers
+//      repository.save(new Person(123l, "A", "Ta"));
+//      repository.save(new Person(123l, "Pode", "Pa"));
+//
+//      // fetch all customers
+//      log.info("Persons found with findAll():");
+//      log.info("-------------------------------");
+//      for (Person customer : repository.findAll()) {
+//        log.info(customer.toString());
+//      }
+//      log.info("");
+//    };
+//  }
 }

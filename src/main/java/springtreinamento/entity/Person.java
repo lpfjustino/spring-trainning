@@ -28,6 +28,10 @@ public class Person {
     this.setCountry(country);
   }
 
+  public Person(Long id){
+    this.setId(id);
+  }
+
   public Long getId() {
     return id;
   }

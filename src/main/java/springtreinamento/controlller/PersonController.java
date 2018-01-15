@@ -8,53 +8,55 @@ import org.springframework.web.bind.annotation.*;
 import springtreinamento.entity.Person;
 import springtreinamento.repository.PersonRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(path="/person")
 public class PersonController {
-  @Autowired
-  private PersonRepository personRepository;
+  @PersistenceContext
+  private EntityManager manager;
 
+  @Transactional
   @PostMapping
   public @ResponseBody String addNewPerson (@Valid @RequestBody Person person) {
-    personRepository.save(person);
+    manager.persist(person);
     return "Saved";
   }
 
+  @Transactional
   @PutMapping
   public @ResponseBody String updatePerson (@Valid @RequestBody Person person) {
-    personRepository.save(person);
+    manager.merge(person);
     return "Updated";
   }
 
-  @DeleteMapping
-  public @ResponseBody String deletePerson (@Valid @RequestBody Person person) {
-    personRepository.delete(person);
-    return "Removed";
+  @GetMapping("/")
+  public @ResponseBody List<Person> lista() {
+    return manager.createQuery("select p from Person p").getResultList();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") Long personId) {
-    Person person = personRepository.findOne(personId);
-    if(person == null) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok().body(person);
+  public Person getPersonById(@PathVariable(value="id") Long id) {
+    return manager.find(Person.class, id);
   }
 
-  @GetMapping("/")
-  public ResponseEntity<List<Person>> getPersonByName(@RequestParam(value = "name") String personName) {
-    List<Person> person = personRepository.findByName(personName);
-    if(person == null) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok().body(person);
+  @Transactional
+  @DeleteMapping
+  public @ResponseBody String remove(@Valid @RequestBody Person person) {
+    Person removedPerson = getPersonById(person.getId());
+    manager.remove(removedPerson);
+    return "Removed";
   }
 
-  @GetMapping(path="/all")
-  public @ResponseBody Iterable<Person> getAllPersons() {
-    return personRepository.findAll();
+  @Transactional
+  @DeleteMapping("/{id}")
+  public @ResponseBody String remove(@PathVariable(value="id") Long id) {
+    Person removedPerson = getPersonById(id);
+    manager.remove(removedPerson);
+    return "Removed";
   }
 }
