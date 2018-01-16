@@ -1,6 +1,7 @@
 package springtreinamento.controlller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,21 +19,32 @@ public class PersonController {
   private PersonRepository personRepository;
 
   @PostMapping
-  public @ResponseBody String addNewPerson (@Valid @RequestBody Person person) {
-    personRepository.save(person);
-    return "Saved";
+  public @ResponseBody ResponseEntity<?> addNewPerson (@Valid @RequestBody Person person) {
+    try {
+      personRepository.save(person);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 
   @PutMapping
-  public @ResponseBody String updatePerson (@Valid @RequestBody Person person) {
-    personRepository.save(person);
-    return "Updated";
+  public @ResponseBody ResponseEntity<?> updatePerson (@Valid @RequestBody Person person) {
+    try {
+      return new ResponseEntity<>(personRepository.save(person), HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 
   @DeleteMapping
-  public @ResponseBody String deletePerson (@Valid @RequestBody Person person) {
-    personRepository.delete(person);
-    return "Removed";
+  public @ResponseBody ResponseEntity<?> deletePerson (@Valid @RequestBody Person person) {
+    try {
+      personRepository.delete(person);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 
   @GetMapping("/{id}")
@@ -54,7 +66,7 @@ public class PersonController {
   }
 
   @GetMapping(path="/all")
-  public @ResponseBody Iterable<Person> getAllPersons() {
-    return personRepository.findAll();
+  public @ResponseBody ResponseEntity<Iterable<Person>> getAllPersons() {
+    return ResponseEntity.ok().body(personRepository.findAll());
   }
 }
