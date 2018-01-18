@@ -34,7 +34,8 @@ public class UserController {
 
       Calendar c = Calendar.getInstance();
       c.setTime(new Date());
-      c.add(Calendar.HOUR_OF_DAY, 5);
+//      c.add(Calendar.HOUR_OF_DAY, 5);
+      c.add(Calendar.SECOND, 10);
       Date expiresAt = c.getTime();
 
       // Replace by a safer token

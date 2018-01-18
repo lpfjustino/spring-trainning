@@ -17,6 +17,7 @@ import springtreinamento.repository.SessionRepository;
 import springtreinamento.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,13 +32,31 @@ public class PersonController {
 
   private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-  public User authenticate(String token) {
+  public Session getSession(String token) {
     if(token.isEmpty())
       return null;
 
     Session userSession = sessionRepository.findByToken(token);
 
     if(userSession == null)
+      return null;
+
+    return userSession;
+  }
+
+  public boolean hasExpired(Session session) {
+    return session.getExpiresAt().before(new Date());
+  }
+
+  public User authenticate(String token) {
+    Session userSession = getSession(token);
+
+    if(userSession == null)
+      return null;
+
+    boolean hasExpired = hasExpired(userSession);
+
+    if(hasExpired)
       return null;
 
     User loggedUser = userRepository.findById(userSession.getUserId());
