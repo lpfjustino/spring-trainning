@@ -101,6 +101,20 @@ public class PersonController {
     }
   }
 
+  @DeleteMapping("/{id}")
+  public @ResponseBody ResponseEntity<?> deletePerson (@Valid @PathVariable String id, @RequestHeader("Authorization") String token) {
+    if(authenticate(token) == null) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Isteji logano");
+    }
+    try {
+      Person deletedPerson = personRepository.findById(id);
+      personRepository.delete(deletedPerson);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<?> getPersonById(@PathVariable(value = "id") String personId, @RequestHeader("Authorization") String token) {
     if(authenticate(token) == null) {
@@ -128,6 +142,8 @@ public class PersonController {
   @GetMapping(path="/all")
   public @ResponseBody ResponseEntity<?> getAllPersons(@RequestHeader("Authorization") String token) {
     if(authenticate(token) == null) {
+      System.out.println(token);
+      System.out.println(authenticate(token));
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Isteji logano");
     }
     return ResponseEntity.ok().body(personRepository.findAll());

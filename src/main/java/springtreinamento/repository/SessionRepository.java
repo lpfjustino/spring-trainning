@@ -6,5 +6,6 @@ import springtreinamento.entity.Session;
 
 @Repository
 public interface SessionRepository extends MongoRepository<Session, String> {
-  public Session findByToken(String token);
+  Session findByToken(String token);
+  Long deleteByUserId(String userId);
 }

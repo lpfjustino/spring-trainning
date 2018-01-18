@@ -1,7 +1,8 @@
 package springtreinamento.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,9 +16,10 @@ public class Session {
 
   public Session() {}
 
+  @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private String userId;
 
-  @Id
   private String token;
 
   private Date expiresAt;

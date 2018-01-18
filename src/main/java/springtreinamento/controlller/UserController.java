@@ -34,12 +34,14 @@ public class UserController {
 
       Calendar c = Calendar.getInstance();
       c.setTime(new Date());
-//      c.add(Calendar.HOUR_OF_DAY, 5);
-      c.add(Calendar.SECOND, 10);
+      c.add(Calendar.HOUR_OF_DAY, 5);
+//      c.add(Calendar.SECOND, 10);
       Date expiresAt = c.getTime();
 
       // Replace by a safer token
       String token = authUser.getId();
+
+      sessionRepository.deleteByUserId(authUser.getId());
 
       Session session = new Session(token, authUser.getId(), expiresAt);
       sessionRepository.save(session);
