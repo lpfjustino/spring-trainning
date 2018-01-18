@@ -37,10 +37,13 @@ public class UserController {
       c.add(Calendar.HOUR_OF_DAY, 5);
       Date expiresAt = c.getTime();
 
-      Session session = new Session(user.getId(), user.getId(), expiresAt);
+      // Replace by a safer token
+      String token = authUser.getId();
+
+      Session session = new Session(token, authUser.getId(), expiresAt);
       sessionRepository.save(session);
 
-      return new ResponseEntity<>(HttpStatus.OK);
+      return new ResponseEntity<>(token, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

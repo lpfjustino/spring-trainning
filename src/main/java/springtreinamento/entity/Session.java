@@ -7,32 +7,27 @@ import java.util.Date;
 @Entity
 public class Session {
 
-  public Session(String token, String id) {
+  public Session(String token, String userId, Date expiresAt) {
     this.setToken(token);
-    this.setId(id);
-  }
-
-  public Session(String token, String id, Date expiresAt) {
-    this.setToken(token);
-    this.setId(id);
+    this.setUserId(userId);
     this.setExpiresAt(expiresAt);
   }
 
   public Session() {}
 
-  private String id;
+  private String userId;
 
   @Id
   private String token;
 
   private Date expiresAt;
 
-  public String getId() {
-    return id;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getToken() {
