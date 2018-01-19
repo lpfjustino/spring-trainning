@@ -16,11 +16,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="springtreinamento" />
+        <module name="spring-trainning" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="springtreinamento" target="1.8" />
+      <module name="spring-trainning" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

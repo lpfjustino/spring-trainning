@@ -1,8 +1,8 @@
-package springtreinamento.repository;
+package com.example.springtrainning.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import springtreinamento.entity.Session;
+import com.example.springtrainning.entity.Session;
 
 @Repository
 public interface SessionRepository extends MongoRepository<Session, String> {

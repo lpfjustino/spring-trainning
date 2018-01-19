@@ -1,6 +1,4 @@
-package springtreinamento.entity;
-
-import org.springframework.data.mongodb.core.mapping.Field;
+package com.example.springtrainning.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -46,5 +44,9 @@ public class Session {
 
   public void setExpiresAt(Date expiresAt) {
     this.expiresAt = expiresAt;
+  }
+
+  public boolean hasExpired() {
+    return this.expiresAt.before(new Date());
   }
 }

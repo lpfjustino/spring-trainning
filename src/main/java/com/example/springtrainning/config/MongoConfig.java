@@ -1,4 +1,4 @@
-package springtreinamento.config;
+package com.example.springtrainning.config;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "springtreinamento.repository")
+@EnableMongoRepositories(basePackages = "com.example.springtrainning.repository")
 public class MongoConfig {
 
   @Bean

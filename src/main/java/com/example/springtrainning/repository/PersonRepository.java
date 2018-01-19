@@ -1,9 +1,8 @@
-package springtreinamento.repository;
+package com.example.springtrainning.repository;
 
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import springtreinamento.entity.Person;
+import com.example.springtrainning.entity.Person;
 import java.util.List;
 
 @Repository

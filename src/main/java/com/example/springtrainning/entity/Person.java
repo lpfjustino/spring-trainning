@@ -1,4 +1,4 @@
-package springtreinamento.entity;
+package com.example.springtrainning.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 

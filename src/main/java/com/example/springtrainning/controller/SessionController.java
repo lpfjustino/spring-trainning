@@ -1,11 +1,11 @@
-package springtreinamento.controlller;
+package com.example.springtrainning.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springtreinamento.entity.Session;
-import springtreinamento.repository.SessionRepository;
+import com.example.springtrainning.entity.Session;
+import com.example.springtrainning.service.SessionService;
 
 import javax.validation.Valid;
 
@@ -13,40 +13,47 @@ import javax.validation.Valid;
 @RequestMapping(path="/session")
 public class SessionController {
   @Autowired
-  private SessionRepository sessionRepository;
+  private SessionService sessionService;
 
   @PostMapping
   public @ResponseBody ResponseEntity<?> addNewSession (@Valid @RequestBody Session session) {
     try {
-      sessionRepository.save(session);
-      return new ResponseEntity<>(HttpStatus.OK);
+      Session newSession = sessionService.addNewSession(session);
+      return new ResponseEntity<>(newSession, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PutMapping
   public @ResponseBody ResponseEntity<?> updateSession (@Valid @RequestBody Session session) {
     try {
-      return new ResponseEntity<>(sessionRepository.save(session), HttpStatus.OK);
+      Session updatedSession = sessionService.updateSession(session);
+      return new ResponseEntity<>(updatedSession, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @DeleteMapping
   public @ResponseBody ResponseEntity<?> deleteSession (@Valid @RequestBody Session session) {
     try {
-      sessionRepository.delete(session);
+      sessionService.deleteSession(session);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Session> getSessionById(@PathVariable(value = "id") String sessionId) {
-    Session session = sessionRepository.findOne(sessionId);
+    Session session = sessionService.getSessionById(sessionId);
     if(session == null) {
       return ResponseEntity.notFound().build();
     }
@@ -55,6 +62,6 @@ public class SessionController {
 
   @GetMapping(path="/all")
   public @ResponseBody ResponseEntity<Iterable<Session>> getAllSessions() {
-    return ResponseEntity.ok().body(sessionRepository.findAll());
+    return ResponseEntity.ok().body(sessionService.getAllSessions());
   }
 }
